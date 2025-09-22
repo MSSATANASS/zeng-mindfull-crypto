@@ -1,0 +1,48 @@
+@page
+@model CoinbaseOauthDemo.Pages.CoinbaseOauthModel
+@{
+    ViewData["Title"] = "Coinbase OAuth";
+}
+
+<h1>Coinbase OAuth Demo</h1>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(Model.AuthorizationCode))
+{
+    <p><strong>Código recibido:</strong> <code>@Model.AuthorizationCode</code></p>
+}
+
+@if (!string.IsNullOrEmpty(Model.AccessToken))
+{
+    <div class="alert alert-success" role="alert">
+        <p><strong>Token de acceso obtenido:</strong></p>
+        <pre class="bg-light p-2">@Model.AccessToken</pre>
+    </div>
+}
+
+@if (!Model.FlowCompleted)
+{
+    if (!string.IsNullOrEmpty(Model.State))
+    {
+        <p><strong>State generado:</strong> <code>@Model.State</code></p>
+    }
+
+    if (!string.IsNullOrEmpty(Model.AuthorizationUrl))
+    {
+        <a class="btn btn-primary" href="@Model.AuthorizationUrl">Conectar con Coinbase</a>
+    }
+    else
+    {
+        <button class="btn btn-primary" disabled>Configura tus credenciales</button>
+    }
+}
+else
+{
+    <button class="btn btn-primary" disabled>Flujo completado</button>
+}
